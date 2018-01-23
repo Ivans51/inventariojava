@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Usuario">
+
+    <resultMap id="result" type="Usuario">
+        <!-- property="atributo java" column="columna tabla" -->
+        <result property="idUsuario" column="idUsuario"/>
+        <result property="nombre" column="nombre"/>
+        <result property="password" column="password"/>
+        <result property="fecha" column="fecha"/>
+        <result property="nivel" column="nivel"/>
+    </resultMap>
+
+    <select id="login" parameterType="Usuario" resultMap="result">
+        SELECT *
+        FROM store.usuario
+        WHERE nombre = #{nombre} AND password = #{password}
+    </select>
+
+    <select id="selectAll" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria;
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria
+        WHERE idUsuario = #{idUsuario}
+    </select>
+
+    <update id="update" parameterType="Usuario">
+        UPDATE rrhh.auditoria
+        SET name = #{name}
+        WHERE idUsuario = #{idUsuario}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM rrhh.auditoria
+        WHERE idUsuario = #{idUsuario}
+    </delete>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!-- Úsalos y de esa forma no tendrás que escribir constantemente el nombre totalmente cualificado -->
+    <typeAliases>
+        <typeAlias type="core.vo.Auditoria" alias="Auditoria"/>
+        <typeAlias type="core.vo.Articulo" alias="Articulo"/>
+        <typeAlias type="core.vo.Cliente" alias="Cliente"/>
+        <typeAlias type="core.vo.DetalleFactura" alias="DetalleFactura"/>
+        <typeAlias type="core.vo.Devolucion" alias="Devolucion"/>
+        <typeAlias type="core.vo.Factura" alias="Factura"/>
+        <typeAlias type="core.vo.Usuario" alias="Usuario"/>
+        <typeAlias type="core.vo.Proveedor" alias="Proveedor"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/rrhh?zeroDateTimeBehavior=convertToNull"/>
+                <property name="username" value="root"/>
+                <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- In SQL Mapping XML file -->
+    <mappers>
+        <mapper resource="mapper/Auditoria.xml"/>
+        <mapper resource="mapper/Articulo.xml"/>
+        <mapper resource="mapper/Cliente.xml"/>
+        <mapper resource="mapper/DetalleFactura.xml"/>
+        <mapper resource="mapper/Devolucion.xml"/>
+        <mapper resource="mapper/Factura.xml"/>
+        <mapper resource="mapper/Proveedor.xml"/>
+        <mapper resource="mapper/Usuario.xml"/>
+    </mappers>
+
+</configuration>

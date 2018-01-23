@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Cliente">
+
+    <resultMap id="result" type="Cliente">
+        <!-- property="atributo java" column="columna tabla" -->
+        <result property="idcliente" column="idcliente"/>
+        <result property="cedula" column="cedula"/>
+        <result property="nombres" column="nombres"/>
+        <result property="apellidos" column="apellidos"/>
+        <result property="direccion" column="direccion"/>
+        <result property="nombre_ciudad" column="nombre_ciudad"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria;
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria
+        WHERE idcliente = #{idcliente}
+    </select>
+
+    <update id="update" parameterType="Auditoria">
+        UPDATE rrhh.auditoria
+        SET name = #{name}
+        WHERE idcliente = #{idcliente}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM rrhh.auditoria
+        WHERE idcliente = #{idcliente}
+    </delete>
+</mapper>

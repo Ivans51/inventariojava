@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Proveedor">
+
+    <resultMap id="result" type="Proveedor">
+        <!-- property="atributo java" column="columna tabla" -->
+        <result property="idproveedor" column="idproveedor"/>
+        <result property="nombre" column="nombre"/>
+        <result property="apellido" column="apellido"/>
+        <result property="nombre_comercial" column="nombre_comercial"/>
+        <result property="direccion" column="direccion"/>
+        <result property="telefono" column="telefono"/>
+        <result property="nombre_ciudad" column="nombre_ciudad"/>
+        <result property="usuario_idUsuario" column="usuario_idUsuario"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria;
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria
+        WHERE idproveedor = #{idproveedor}
+    </select>
+
+    <update id="update" parameterType="Auditoria">
+        UPDATE rrhh.auditoria
+        SET name = #{name}
+        WHERE idproveedor = #{idproveedor}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM rrhh.auditoria
+        WHERE idproveedor = #{idproveedor}
+    </delete>
+</mapper>

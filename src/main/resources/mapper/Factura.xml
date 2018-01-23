@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Factura">
+
+    <resultMap id="result" type="Factura">
+        <!-- property="atributo java" column="columna tabla" -->
+        <result property="idfactura" column="idfactura"/>
+        <result property="nombre_empleado" column="nombre_empleado"/>
+        <result property="articulos" column="articulos"/>
+        <result property="fecha_facturacion" column="fecha_facturacion"/>
+        <result property="total_factura" column="total_factura"/>
+        <result property="IVA" column="IVA"/>
+        <result property="forma_pago" column="forma_pago"/>
+        <result property="usuario_idUsuario" column="usuario_idUsuario"/>
+        <result property="cliente_idcliente" column="cliente_idcliente"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria;
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="result">
+        SELECT *
+        FROM rrhh.auditoria
+        WHERE idfactura = #{idfactura}
+    </select>
+
+    <update id="update" parameterType="Factura">
+        UPDATE rrhh.auditoria
+        SET name = #{name}
+        WHERE idfactura = #{idfactura}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM rrhh.auditoria
+        WHERE idfactura = #{idfactura}
+    </delete>
+</mapper>
