@@ -5,6 +5,8 @@
  */
 package views;
 
+import javax.swing.*;
+
 /**
  *
  * @author Ivans
@@ -163,23 +165,31 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
-        // TODO add your handling code here:
+        Proveedores proveedores = new Proveedores();
+        proveedores.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        // TODO add your handling code here:
+        Productos proveedores = new Productos();
+        proveedores.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
+        Clientes proveedores = new Clientes();
+        proveedores.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        // TODO add your handling code here:
+        Ventas proveedores = new Ventas();
+        proveedores.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcercaDeActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Hello User");
     }//GEN-LAST:event_btnAcercaDeActionPerformed
 
     /**

@@ -19,8 +19,6 @@ import javax.swing.*;
  */
 public class Session extends javax.swing.JFrame {
 
-    public Usuario usuario;
-
     /**
      * Creates new form Session
      */
@@ -140,14 +138,18 @@ public class Session extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        /* Inicio Sesión */
         try {
             LoginUser loginUser = new LoginUser();
             Validar.campoVacio(jUsuario, jPassword);
-            usuario = loginUser.iniciarSession(jUsuario.getText(), jPassword.getText());
-            new JOptionPane("Hello");
+            Usuario usuario = loginUser.iniciarSession(jUsuario.getText(), jPassword.getText());
+            JOptionPane.showMessageDialog(null, "Bienvenido usuario" + jUsuario.getText());
+            Home home = new Home();
+            home.setVisible(true);
+            dispose();
         } catch (Myexception myexception) {
             myexception.printStackTrace();
-            /*new AlertUtil(Estado.ERROR, myexception.getMessage());*/
+            JOptionPane.showMessageDialog(null, myexception.getMessage() + " " + jUsuario.getText());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

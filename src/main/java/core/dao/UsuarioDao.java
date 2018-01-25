@@ -17,13 +17,10 @@ public class UsuarioDao {
 
     public Usuario login(Usuario usuario) throws Myexception {
         Usuario person = null;
-        SqlSession session = sqlSessionFactory.openSession();
-        try {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
             person = session.selectOne("Usuario.login", usuario);
-        } finally {
-            session.close();
         }
-        System.out.println("login(" + usuario.getNombre() + usuario.getPassword());
+        System.out.println("login " + usuario.getNombre() + usuario.getPassword());
         if (person == null)
             throw new Myexception("No se encuentra");
         else

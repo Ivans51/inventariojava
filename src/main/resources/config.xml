@@ -7,7 +7,6 @@
 
     <!-- Úsalos y de esa forma no tendrás que escribir constantemente el nombre totalmente cualificado -->
     <typeAliases>
-        <typeAlias type="core.vo.Auditoria" alias="Auditoria"/>
         <typeAlias type="core.vo.Articulo" alias="Articulo"/>
         <typeAlias type="core.vo.Cliente" alias="Cliente"/>
         <typeAlias type="core.vo.DetalleFactura" alias="DetalleFactura"/>
@@ -22,7 +21,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/rrhh?zeroDateTimeBehavior=convertToNull"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/"/>
                 <property name="username" value="root"/>
                 <property name="password" value=""/>
             </dataSource>
@@ -31,7 +30,6 @@
 
     <!-- In SQL Mapping XML file -->
     <mappers>
-        <mapper resource="mapper/Auditoria.xml"/>
         <mapper resource="mapper/Articulo.xml"/>
         <mapper resource="mapper/Cliente.xml"/>
         <mapper resource="mapper/DetalleFactura.xml"/>

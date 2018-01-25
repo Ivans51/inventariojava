@@ -19,23 +19,31 @@
 
     <select id="selectAll" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria;
+        FROM store.proveedor;
     </select>
 
     <select id="selectById" parameterType="int" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria
+        FROM store.proveedor
         WHERE idproveedor = #{idproveedor}
     </select>
 
-    <update id="update" parameterType="Auditoria">
-        UPDATE rrhh.auditoria
-        SET name = #{name}
+    <insert id="insert" parameterType="Proveedor" useGeneratedKeys="true" keyProperty="idProveedor">
+        INSERT INTO store.proveedor (nombre, apellido, nombre_comercial, direccion, telefono, nombre_ciudad, usuario_idUsuario)
+        VALUES (#{nombre}, #{apellido}, #{nombre_comercial}, #{direccion}, #{telefono}, #{nombre_ciudad}, #{usuario_idUsuario});
+    </insert>
+
+    <update id="update" parameterType="Proveedor">
+        UPDATE store.proveedor
+        SET nombre = #{nombre}, apellido = #{apellido},
+            nombre_comercial = #{nombre_comercial}, direccion = #{direccion},
+            telefono = #{telefono}, nombre_ciudad = #{nombre_ciudad},
+            usuario_idUsuario = #{usuario_idUsuario}
         WHERE idproveedor = #{idproveedor}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM rrhh.auditoria
+        DELETE FROM store.proveedor
         WHERE idproveedor = #{idproveedor}
     </delete>
 </mapper>

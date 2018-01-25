@@ -20,23 +20,31 @@
 
     <select id="selectAll" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria;
+        FROM store.factura;
     </select>
 
     <select id="selectById" parameterType="int" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria
+        FROM store.factura
         WHERE idfactura = #{idfactura}
     </select>
 
+    <insert id="insert" parameterType="Factura" useGeneratedKeys="true" keyProperty="idfactura">
+        INSERT INTO store.factura (nombre_empleado, articulos, fecha_facturacion, total_factura, IVA, forma_pago, usuario_idUsuario, cliente_idcliente)
+        VALUES (#{nombre_empleado}, #{articulos}, #{fecha_facturacion}, #{total_factura}, #{IVA}, #{forma_pago}, #{usuario_idUsuario}, #{cliente_idcliente});
+    </insert>
+
     <update id="update" parameterType="Factura">
-        UPDATE rrhh.auditoria
-        SET name = #{name}
+        UPDATE store.factura
+        SET nombre_empleado = #{nombre_empleado}, articulos = #{articulos},
+            fecha_facturacion = #{fecha_facturacion}, total_factura = #{total_factura},
+            IVA = #{IVA}, forma_pago = #{forma_pago},
+            usuario_idUsuario = #{usuario_idUsuario}, cliente_idcliente = #{cliente_idcliente}
         WHERE idfactura = #{idfactura}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM rrhh.auditoria
+        DELETE FROM store.factura
         WHERE idfactura = #{idfactura}
     </delete>
 </mapper>

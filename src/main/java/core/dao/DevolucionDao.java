@@ -14,11 +14,6 @@ public class DevolucionDao {
         this.sqlSessionFactory = sqlSessionFactory;
     }
 
-    /**
-     * Returns the list of all Auditoria instances from the database.
-     *
-     * @return the list of all Auditoria instances from the database.
-     */
     @SuppressWarnings("unchecked")
     public List<Devolucion> selectAll() {
         List<Devolucion> list = null;

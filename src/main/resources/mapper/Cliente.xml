@@ -17,23 +17,30 @@
 
     <select id="selectAll" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria;
+        FROM store.cliente;
     </select>
 
     <select id="selectById" parameterType="int" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria
+        FROM store.cliente
         WHERE idcliente = #{idcliente}
     </select>
 
-    <update id="update" parameterType="Auditoria">
-        UPDATE rrhh.auditoria
-        SET name = #{name}
+    <insert id="insert" parameterType="Cliente" useGeneratedKeys="true" keyProperty="idcliente">
+        INSERT INTO store.cliente (cedula, nombres, apellidos, direccion, nombre_ciudad)
+        VALUES (#{cedula}, #{nombres}, #{apellidos}, #{direccion}, #{nombre_ciudad});
+    </insert>
+
+    <update id="update" parameterType="Cliente">
+        UPDATE store.cliente
+        SET cedula = #{cedula}, nombres = #{nombres},
+            apellidos = #{apellidos}, direccion = #{direccion},
+            nombre_ciudad = #{nombre_ciudad}
         WHERE idcliente = #{idcliente}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM rrhh.auditoria
+        DELETE FROM store.cliente
         WHERE idcliente = #{idcliente}
     </delete>
 </mapper>

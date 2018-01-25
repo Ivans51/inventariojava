@@ -5,17 +5,28 @@
  */
 package views;
 
+import core.conexion.MyBatisConnection;
+import core.dao.ArticuloDao;
+import core.util.Validar;
+import core.vo.Articulo;
+
+import javax.swing.*;
+import java.util.Date;
+
 /**
  *
  * @author Ivans
  */
 public class Productos extends javax.swing.JFrame {
 
+    private ArticuloDao articuloDao;
+
     /**
      * Creates new form Home
      */
     public Productos() {
         initComponents();
+        articuloDao = new ArticuloDao(MyBatisConnection.getSqlSessionFactory());
     }
 
     /**
@@ -269,23 +280,40 @@ public class Productos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO add your handling code here:
+        articuloDao.insert(getArticulo());
+        JOptionPane.showConfirmDialog(null, "Desea volver al inicio");
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    private Articulo getArticulo() {
+        Articulo articulo = new Articulo();
+        articulo.setDescripcion(jCantidad.getText());
+        /*articulo.setFecha_ingreso();*/
+        articulo.setNombre(jNombre.getText());
+        articulo.setPrecio_costo(jCantidad.getText());
+        articulo.setPrecio_venta(Double.valueOf(jCantidad.getText()));
+        articulo.setStock(jCantidad.getText());
+        articulo.setProveedor_idproveedor(1);
+        return articulo;
+    }
+
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
+        Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jTextField1);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        articuloDao.update(getArticulo());
+        JOptionPane.showMessageDialog(null, "Artículo Actualizado");
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        articuloDao.delete(1);
+        JOptionPane.showMessageDialog(null, "Artículo Eliminado");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        Home home = new Home();
+        home.setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**

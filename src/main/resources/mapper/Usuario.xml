@@ -22,23 +22,29 @@
 
     <select id="selectAll" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria;
+        FROM store.usuario;
     </select>
 
     <select id="selectById" parameterType="int" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria
+        FROM store.usuario
         WHERE idUsuario = #{idUsuario}
     </select>
 
+    <insert id="insert" parameterType="Usuario" useGeneratedKeys="true" keyProperty="idUsuario">
+        INSERT INTO store.usuario (nombre, password, fecha, nivel)
+        VALUES (#{nombre}, #{password}, #{fecha}, #{nivel});
+    </insert>
+
     <update id="update" parameterType="Usuario">
-        UPDATE rrhh.auditoria
-        SET name = #{name}
+        UPDATE store.usuario
+        SET nombre = #{nombre}, password = #{password},
+            fecha = #{fecha}, nivel = #{nivel}
         WHERE idUsuario = #{idUsuario}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM rrhh.auditoria
+        DELETE FROM store.usuario
         WHERE idUsuario = #{idUsuario}
     </delete>
 </mapper>

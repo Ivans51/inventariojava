@@ -6,10 +6,6 @@ import core.vo.Usuario;
 
 public class LoginUser {
 
-    public LoginUser() {
-
-    }
-
     public Usuario iniciarSession(String nombreUsuario, String clave) throws Myexception {
         UsuarioDao usuarioDAO = new UsuarioDao(MyBatisConnection.getSqlSessionFactory());
         Usuario usuario = new Usuario();

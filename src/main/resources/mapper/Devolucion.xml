@@ -17,23 +17,30 @@
 
     <select id="selectAll" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria;
+        FROM store.devolucion;
     </select>
 
     <select id="selectById" parameterType="int" resultMap="result">
         SELECT *
-        FROM rrhh.auditoria
-        WHERE idcliente = #{idcliente}
+        FROM store.devolucion
+        WHERE cod_detallefactura = #{cod_detallefactura}
     </select>
 
-    <update id="update" parameterType="Auditoria">
-        UPDATE rrhh.auditoria
-        SET name = #{name}
-        WHERE idcliente = #{idcliente}
+    <insert id="insert" parameterType="Devolucion" useGeneratedKeys="true" keyProperty="cod_detallefactura">
+        INSERT INTO store.devolucion (motivo, fecha_devolucion, cantidad, detalle_factura_cod_factura, articulo_idarticulo)
+        VALUES (#{motivo}, #{fecha_devolucion}, #{cantidad}, #{detalle_factura_cod_factura}, #{articulo_idarticulo});
+    </insert>
+
+    <update id="update" parameterType="Devolucion">
+        UPDATE store.devolucion
+        SET motivo = #{motivo}, fecha_devolucion = #{fecha_devolucion},
+            cantidad = #{cantidad}, detalle_factura_cod_factura = #{detalle_factura_cod_factura},
+            articulo_idarticulo = #{articulo_idarticulo}
+        WHERE cod_detallefactura = #{cod_detallefactura}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM rrhh.auditoria
-        WHERE idcliente = #{idcliente}
+        DELETE FROM store.devolucion
+        WHERE cod_detallefactura = #{cod_detallefactura}
     </delete>
 </mapper>

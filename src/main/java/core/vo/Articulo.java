@@ -6,7 +6,7 @@ public class Articulo {
 
     private int idarticulo;
     private String nombre;
-    private Double descripcion;
+    private String descripcion;
     private Double precio_venta;
     private String precio_costo;
     private String stock;
@@ -29,11 +29,11 @@ public class Articulo {
         this.nombre = nombre;
     }
 
-    public Double getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(Double descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 

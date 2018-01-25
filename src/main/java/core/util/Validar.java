@@ -1,7 +1,6 @@
 package core.util;
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 
@@ -27,15 +26,10 @@ public class Validar {
             throw new Myexception("Campo Vacío");
     }
 
-    public static boolean limmpiarCampos(TextField... txt) throws Myexception {
-        boolean esValido = true;
-        for (int i = 0; i < txt.length; i++) {
-            txt[i].setText("");
+    public static void limmpiarCampos(JTextField... txt) {
+        for (JTextField aTxt : txt) {
+            aTxt.setText("");
         }
-        if (esValido)
-            return esValido;
-        else
-            throw new Myexception("Erro message");
     }
 
     /**
@@ -95,6 +89,7 @@ public class Validar {
             }
         }
     }
+
     public static void disabledControl(int type, boolean state, MenuItem... ctr) throws Myexception {
         for (MenuItem control : ctr) {
             switch (type) {
@@ -107,6 +102,7 @@ public class Validar {
             }
         }
     }
+
     /**
      * Comportamiento del campo
      *

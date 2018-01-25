@@ -1,6 +1,5 @@
 package core.dao;
 
-import core.vo.Auditoria;
 import core.vo.Cliente;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,11 +14,6 @@ public class ClienteDao {
         this.sqlSessionFactory = sqlSessionFactory;
     }
 
-    /**
-     * Returns the list of all Auditoria instances from the database.
-     *
-     * @return the list of all Auditoria instances from the database.
-     */
     @SuppressWarnings("unchecked")
     public List<Cliente> selectAll() {
         List<Cliente> list = null;

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Articulo">
+
+    <resultMap id="result" type="Articulo">
+        <!-- property="atributo java" column="columna tabla" -->
+        <result property="idarticulo" column="idarticulo"/>
+        <result property="nombre" column="nombre"/>
+        <result property="descripcion" column="descripcion"/>
+        <result property="precio_venta" column="precio_venta"/>
+        <result property="precio_costo" column="precio_costo"/>
+        <result property="stock" column="stock"/>
+        <result property="fecha_ingreso" column="fecha_ingreso"/>
+        <result property="proveedor_idproveedor" column="proveedor_idproveedor"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="result">
+        SELECT *
+        FROM store.articulo;
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="result">
+        SELECT *
+        FROM store.articulo
+        WHERE idarticulo = #{idarticulo}
+    </select>
+
+    <insert id="insert" parameterType="Articulo" useGeneratedKeys="true" keyProperty="idarticulo">
+        INSERT INTO store.articulo (nombre, descripcion, precio_venta, precio_costo, stock, fecha_ingreso, proveedor_idproveedor)
+        VALUES (#{nombre}, #{descripcion}, #{precio_venta}, #{precio_costo}, #{stock}, #{fecha_ingreso}, #{proveedor_idproveedor});
+    </insert>
+
+    <update id="update" parameterType="Articulo">
+        UPDATE store.articulo
+        SET nombre = #{nombre}, descripcion = #{descripcion},
+            precio_venta = #{precio_venta}, precio_costo = #{precio_costo},
+            stock = #{stock}, fecha_ingreso = #{fecha_ingreso},
+            proveedor_idproveedor = #{proveedor_idproveedor}
+        WHERE idarticulo = #{idarticulo}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM store.articulo
+        WHERE idarticulo = #{idarticulo}
+    </delete>
+</mapper>
