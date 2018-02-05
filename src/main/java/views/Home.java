@@ -57,7 +57,7 @@ public class Home extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Piensa en lo que \nes correcto y hazlo");
 
-        btnProveedores.setBackground(new java.awt.Color(0, 153, 102));
+        btnProveedores.setBackground(new java.awt.Color(255, 255, 255));
         btnProveedores.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnProveedores.setText("Proveedores");
         btnProveedores.setToolTipText("");
@@ -67,7 +67,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnProductos.setBackground(new java.awt.Color(0, 153, 102));
+        btnProductos.setBackground(new java.awt.Color(255, 255, 255));
         btnProductos.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnProductos.setText("Productos");
         btnProductos.setToolTipText("");
@@ -77,7 +77,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnClientes.setBackground(new java.awt.Color(0, 153, 102));
+        btnClientes.setBackground(new java.awt.Color(255, 255, 255));
         btnClientes.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnClientes.setText("Clientes");
         btnClientes.setToolTipText("");
@@ -87,7 +87,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnVentas.setBackground(new java.awt.Color(102, 0, 51));
+        btnVentas.setBackground(new java.awt.Color(255, 255, 255));
         btnVentas.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnVentas.setText("Venta");
         btnVentas.setToolTipText("");
@@ -97,7 +97,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnAcercaDe.setBackground(new java.awt.Color(0, 102, 0));
+        btnAcercaDe.setBackground(new java.awt.Color(255, 255, 255));
         btnAcercaDe.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnAcercaDe.setText("Acerca de");
         btnAcercaDe.setToolTipText("");

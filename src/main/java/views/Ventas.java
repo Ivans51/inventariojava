@@ -95,7 +95,7 @@ public class Ventas extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Ventas");
 
-        bntSalir.setBackground(new java.awt.Color(0, 102, 0));
+        bntSalir.setBackground(new java.awt.Color(255, 255, 255));
         bntSalir.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         bntSalir.setText("Salir");
         bntSalir.setToolTipText("");
@@ -108,7 +108,7 @@ public class Ventas extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(12, 43, 73));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnIngresar.setBackground(new java.awt.Color(0, 153, 102));
+        btnIngresar.setBackground(new java.awt.Color(255, 255, 255));
         btnIngresar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("");
@@ -118,7 +118,7 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(0, 153, 102));
+        btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setToolTipText("");
@@ -140,7 +140,7 @@ public class Ventas extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nombre");
 
-        btnAgregarProducto.setBackground(new java.awt.Color(0, 153, 102));
+        btnAgregarProducto.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarProducto.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnAgregarProducto.setText("Agregar Producto");
         btnAgregarProducto.setToolTipText("");
@@ -160,7 +160,7 @@ public class Ventas extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Productos Agregardos:");
 
-        btnBorrar.setBackground(new java.awt.Color(0, 153, 102));
+        btnBorrar.setBackground(new java.awt.Color(255, 255, 255));
         btnBorrar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnBorrar.setText("Borrar");
         btnBorrar.setToolTipText("");
@@ -278,7 +278,7 @@ public class Ventas extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cédula");
 
-        btnFactura.setBackground(new java.awt.Color(0, 153, 102));
+        btnFactura.setBackground(new java.awt.Color(255, 255, 255));
         btnFactura.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnFactura.setText("Generar Factura");
         btnFactura.setToolTipText("");
@@ -288,7 +288,7 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(102, 0, 51));
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("");
@@ -298,7 +298,7 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setBackground(new java.awt.Color(0, 153, 102));
+        btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
         btnBuscar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.setToolTipText("");

@@ -92,7 +92,7 @@ public class Productos extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Productos");
 
-        btnIngresar.setBackground(new java.awt.Color(0, 153, 102));
+        btnIngresar.setBackground(new java.awt.Color(255, 255, 255));
         btnIngresar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnIngresar.setText("Ingresar");
         btnIngresar.setToolTipText("");
@@ -102,7 +102,7 @@ public class Productos extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(0, 153, 102));
+        btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setToolTipText("");
@@ -112,7 +112,7 @@ public class Productos extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(0, 153, 102));
+        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
         btnEditar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setToolTipText("");
@@ -122,7 +122,7 @@ public class Productos extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(102, 0, 51));
+        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("");
@@ -132,7 +132,7 @@ public class Productos extends javax.swing.JFrame {
             }
         });
 
-        btnSalir.setBackground(new java.awt.Color(0, 102, 0));
+        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setToolTipText("");

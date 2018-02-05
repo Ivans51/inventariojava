@@ -54,7 +54,7 @@ public class Session extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Usuario");
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 102));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Aceptar");
         jButton1.setToolTipText("");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -68,13 +68,13 @@ public class Session extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/AngularJS_1.png"))); // NOI18N
         jLabel2.setText("jLabel1");
 
-        btnSalir.setBackground(new java.awt.Color(51, 102, 0));
+        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("Salir");
         btnSalir.setToolTipText("");
 
         btnAceptar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAceptar.setText("Contraseï¿½a");
+        btnAceptar.setText("Contraseña");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
