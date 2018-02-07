@@ -17,14 +17,13 @@ import javax.swing.*;
  */
 public class Proveedores extends javax.swing.JFrame {
 
-    private ProveedorDao proveedorDao;
+    private ProveedorDao proveedorDao = new ProveedorDao(MyBatisConnection.getSqlSessionFactory());;
 
     /**
      * Creates new form Home
      */
     public Proveedores() {
         initComponents();
-        proveedorDao = new ProveedorDao(MyBatisConnection.getSqlSessionFactory());
     }
 
     /**

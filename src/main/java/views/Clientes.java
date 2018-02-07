@@ -7,13 +7,10 @@ package views;
 
 import core.conexion.MyBatisConnection;
 import core.dao.ClienteDao;
-import core.tablemodel.ClienteTableModel;
 import core.util.Validar;
 import core.vo.Cliente;
 
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.util.List;
 
 /**
@@ -24,13 +21,17 @@ public class Clientes extends javax.swing.JFrame {
     private ClienteDao clienteDao = new ClienteDao(MyBatisConnection.getSqlSessionFactory());
     private Cliente cliente;
     private DefaultTableModel tableModel = new DefaultTableModel();
+    private String value;
 
     /**
      * Creates new form Home
      */
     public Clientes() {
         initComponents();
-        
+        refrescar();
+    }
+
+    private void refrescar() {
         List<Cliente> clientes = clienteDao.selectAll();
         tableModel.setColumnIdentifiers(new Object[]{"Nombres", "Apellidos"});
         for (Cliente cliente : clientes) {
@@ -40,29 +41,6 @@ public class Clientes extends javax.swing.JFrame {
             tableModel.addRow(fila);
         }
         jTableCliente.setModel(tableModel);
-        
-        /*refrescar(cliente);*/
-    }
-    
-    public final void refrescar() {
-        int a = tableModel.getRowCount() - 1;
-        for (int i = a; i >= 0; i--) {
-            tableModel.removeRow(i);
-        }
-        /* cur = proveedores.find();
-        while (cur.hasNext()) {
-            DBObject obj = cur.next();
-            Object[] fila = {
-                obj.get("_id"),
-                obj.get("nombre"),
-                obj.get("apellido"),
-                obj.get("nombre comercial"),
-                obj.get("direccion"),
-                obj.get("telefono")
-            };*/
-        
-        /*jTable1.setModel(tableModel);*/
-        // cur.close();
     }
 
     /**
@@ -101,29 +79,6 @@ public class Clientes extends javax.swing.JFrame {
                 new Clientes().setVisible(true);
             }
         });
-    }
-
-    private void fillTable() {
-        /*String col[] = {"cedula", "apellidos", "direccion", "nombre_ciudad", "nombres"};
-        tableModel = new DefaultTableModel(col, 0);
-        jTable1 = new JTable(tableModel);
-        //To remove previously added rows
-        while (jTable1.getRowCount() > 0) {
-            ((DefaultTableModel) jTable1.getModel()).removeRow(0);
-        }
-        List<Cliente> clientes = clienteDao.selectAll();
-        for (Cliente cliente : clientes) {
-            String cedula = cliente.getCedula();
-            String apellidos = cliente.getApellidos();
-            String direccion = cliente.getDireccion();
-            String nombre_ciudad = cliente.getNombre_ciudad();
-            String nombres = cliente.getNombres();
-            Object[] data = {cedula, apellidos, direccion, nombre_ciudad, nombres};
-            tableModel.addRow(data);
-        }*/
-        List<Cliente> clientes = clienteDao.selectAll();
-        TableModel model = new ClienteTableModel(clientes);
-        jTableCliente = new JTable(model);
     }
 
     /**
@@ -242,11 +197,11 @@ public class Clientes extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Cédula");
+        jLabel4.setText("Cï¿½dula");
 
         jLabel5.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cédula");
+        jLabel5.setText("Cï¿½dula");
 
         jLabel6.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -271,7 +226,7 @@ public class Clientes extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Teléfono");
+        jLabel8.setText("Telï¿½fono");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -379,7 +334,15 @@ public class Clientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        clienteDao.insert(getCliente());
+        switch (value) {
+            case "":
+                clienteDao.insert(getCliente());
+                break;
+            default:
+                clienteDao.update(getCliente());
+                break;
+        }
+        refrescar();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private Cliente getCliente() {
@@ -393,15 +356,24 @@ public class Clientes extends javax.swing.JFrame {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         Validar.limmpiarCampos(jTelefono, jCedula, jCiudad, jNombre, jTextField1);
+        value = "";
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        clienteDao.update(getCliente());
+        getFilaValor();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        clienteDao.delete(1);
+        getFilaValor();
+        clienteDao.delete(Integer.parseInt(value));
+        refrescar();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void getFilaValor() {
+        int column = 0;
+        int row = jTableCliente.getSelectedRow();
+        value = jTableCliente.getModel().getValueAt(row, column).toString();
+    }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         Home home = new Home();
