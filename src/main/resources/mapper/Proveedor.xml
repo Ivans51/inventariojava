@@ -28,7 +28,7 @@
         WHERE idproveedor = #{idproveedor}
     </select>
 
-    <insert id="insert" parameterType="Proveedor" useGeneratedKeys="true" keyProperty="idProveedor">
+    <insert id="insert" parameterType="Proveedor" useGeneratedKeys="true" keyProperty="idproveedor">
         INSERT INTO store.proveedor (nombre, apellido, nombre_comercial, direccion, telefono, nombre_ciudad, usuario_idUsuario)
         VALUES (#{nombre}, #{apellido}, #{nombre_comercial}, #{direccion}, #{telefono}, #{nombre_ciudad}, #{usuario_idUsuario});
     </insert>

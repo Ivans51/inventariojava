@@ -12,6 +12,7 @@ public class LoginUser {
         usuario.setNombre(nombreUsuario);
         usuario.setPassword(clave);
         usuario = usuarioDAO.login(usuario);
+        Storage.setUsuario(usuario);
         if (usuario == null)
             throw new Myexception("No existe el usuario");
         else

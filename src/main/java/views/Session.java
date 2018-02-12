@@ -24,6 +24,7 @@ public class Session extends javax.swing.JFrame {
      */
     public Session() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -74,7 +75,7 @@ public class Session extends javax.swing.JFrame {
 
         btnAceptar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAceptar.setText("Contraseña");
+        btnAceptar.setText("Contraseï¿½a");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,8 +143,8 @@ public class Session extends javax.swing.JFrame {
         try {
             LoginUser loginUser = new LoginUser();
             Validar.campoVacio(jUsuario, jPassword);
-            Usuario usuario = loginUser.iniciarSession(jUsuario.getText(), jPassword.getText());
-            JOptionPane.showMessageDialog(null, "Bienvenido usuario" + jUsuario.getText());
+            loginUser.iniciarSession(jUsuario.getText(), jPassword.getText());
+            JOptionPane.showMessageDialog(null, "Bienvenido usuario " + jUsuario.getText());
             Home home = new Home();
             home.setVisible(true);
             dispose();

@@ -18,6 +18,7 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -38,7 +39,7 @@ public class Home extends javax.swing.JFrame {
         btnProductos = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
-        btnAcercaDe = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel1.setText("Usuario");
@@ -97,13 +98,13 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnAcercaDe.setBackground(new java.awt.Color(255, 255, 255));
-        btnAcercaDe.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
-        btnAcercaDe.setText("Acerca de");
-        btnAcercaDe.setToolTipText("");
-        btnAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+        btnUsuarios.setBackground(new java.awt.Color(255, 255, 255));
+        btnUsuarios.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
+        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setToolTipText("");
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcercaDeActionPerformed(evt);
+                btnUsuariosActionPerformed(evt);
             }
         });
 
@@ -114,14 +115,14 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnProveedores)
-                    .addComponent(btnProductos)
-                    .addComponent(btnClientes)
+                    .addComponent(btnUsuarios)
                     .addComponent(btnVentas)
-                    .addComponent(btnAcercaDe))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                    .addComponent(btnClientes)
+                    .addComponent(btnProductos)
+                    .addComponent(btnProveedores))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 326, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(182, 182, 182))
+                .addGap(164, 164, 164))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -129,25 +130,24 @@ public class Home extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(btnProveedores)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(84, 84, 84)
+                    .addComponent(jLabel2))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(53, 53, 53)
+                    .addComponent(btnProveedores)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnProductos)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnClientes)
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel2)
-                        .addGap(3, 3, 3)
-                        .addComponent(btnVentas)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnAcercaDe))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(btnClientes)
+                    .addGap(45, 45, 45)
+                    .addComponent(btnVentas)
+                    .addGap(40, 40, 40)
+                    .addComponent(btnUsuarios)
+                    .addGap(49, 49, 49)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,9 +188,11 @@ public class Home extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnVentasActionPerformed
 
-    private void btnAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcercaDeActionPerformed
-        JOptionPane.showMessageDialog(null, "Hello User");
-    }//GEN-LAST:event_btnAcercaDeActionPerformed
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+        Usuario proveedores = new Usuario();
+        proveedores.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,10 +230,10 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAcercaDe;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnProveedores;
+    private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton btnVentas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

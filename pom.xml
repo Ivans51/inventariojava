@@ -36,5 +36,11 @@
             <artifactId>mybatis</artifactId>
             <version>3.4.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>LATEST</version>
+        </dependency>
     </dependencies>
 </project>

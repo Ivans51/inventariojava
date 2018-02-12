@@ -42,6 +42,12 @@
         WHERE idarticulo = #{idarticulo}
     </update>
 
+    <update id="updateStock" parameterType="Articulo">
+        UPDATE store.articulo
+        SET stock = #{stock}
+        WHERE nombre = #{nombre}
+    </update>
+
     <delete id="delete" parameterType="int">
         DELETE FROM store.articulo
         WHERE idarticulo = #{idarticulo}

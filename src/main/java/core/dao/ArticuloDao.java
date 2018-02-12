@@ -73,15 +73,23 @@ public class ArticuloDao {
     public void update(Articulo usuario) {
         int id = -1;
         SqlSession session = sqlSessionFactory.openSession();
-
         try {
             id = session.update("Articulo.update", usuario);
-
         } finally {
             session.commit();
             session.close();
         }
         System.out.println("update(" + usuario + ") --> updated");
+    }
+    public void updateStock(Articulo usuario) {
+        int id = -1;
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            id = session.update("Articulo.updateStock", usuario);
+        } finally {
+            session.commit();
+            session.close();
+        }
     }
 
     /**

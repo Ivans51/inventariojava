@@ -7,11 +7,19 @@ package views;
 
 import core.conexion.MyBatisConnection;
 import core.dao.ArticuloDao;
+import core.dao.ProveedorDao;
+import core.util.FechaUtil;
 import core.util.Validar;
 import core.vo.Articulo;
+import core.vo.Cliente;
+import core.vo.Proveedor;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,14 +27,44 @@ import java.util.Date;
  */
 public class Productos extends javax.swing.JFrame {
 
-    private ArticuloDao articuloDao;
+    private ArticuloDao articuloDao = new ArticuloDao(MyBatisConnection.getSqlSessionFactory());;
+    private String value = "";
+    private DefaultTableModel tableModel = new DefaultTableModel();
 
     /**
      * Creates new form Home
      */
     public Productos() {
         initComponents();
-        articuloDao = new ArticuloDao(MyBatisConnection.getSqlSessionFactory());
+        setLocationRelativeTo(null);
+        refrescar();
+        setBox();
+    }
+
+    private void setBox() {
+        ProveedorDao proveedorDao = new ProveedorDao(MyBatisConnection.getSqlSessionFactory());
+        List<Proveedor> proveedors = proveedorDao.selectAll();
+        List<String> nombres = new ArrayList<>();
+        for (Proveedor proveedor : proveedors)
+            nombres.add(proveedor.getNombre());
+        // jComboBox.setModel(new DefaultComboBoxModel(nombres.toArray()));
+    }
+
+    private void refrescar() {
+        List<Articulo> articulos = articuloDao.selectAll();
+        if (articulos.size() > 0) {
+            tableModel.setColumnIdentifiers(new Object[]{
+                    "id", "Nombre", "Descripcion", "PrecioCosto", "PrecioVenta"});
+            for (Articulo articulo : articulos) {
+                Object[] fila = {
+                        articulo.getIdarticulo(), articulo.getNombre(),
+                        articulo.getDescripcion(), articulo.getPrecio_costo(),
+                        articulo.getPrecio_venta()
+                };
+                tableModel.addRow(fila);
+            }
+            jTable2.setModel(tableModel);
+        }
     }
 
     /**
@@ -61,6 +99,10 @@ public class Productos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
+        jComboProveedor = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        jDescripcion = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel1.setText("Usuario");
@@ -152,7 +194,7 @@ public class Productos extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Cantidad");
+        jLabel6.setText("Stock");
 
         jLabel7.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -174,6 +216,22 @@ public class Productos extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Proveedor");
+
+        jComboProveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Descrip.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,29 +255,31 @@ public class Productos extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                    .addComponent(jCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                    .addComponent(jPrecioU, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                    .addComponent(jComboProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnSalir))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                            .addComponent(jCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                            .addComponent(jPrecioU, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(551, 551, 551)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jID, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jID, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnBuscar)))))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -238,8 +298,9 @@ public class Productos extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(33, 33, 33)
+                            .addComponent(jID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar))))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -251,12 +312,18 @@ public class Productos extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jPrecioU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(33, 33, 33)
-                        .addComponent(jLabel8))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jComboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnEditar)
@@ -280,41 +347,87 @@ public class Productos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        articuloDao.insert(getArticulo());
-        JOptionPane.showConfirmDialog(null, "Desea volver al inicio");
+        switch (value) {
+            case "":
+                articuloDao.insert(getArticulo());
+                break;
+            default:
+                articuloDao.update(getArticulo());
+                break;
+        }
+        Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jTextField1);
+        value = "";
+        eliminarDatoTable();
+        refrescar();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private Articulo getArticulo() {
         Articulo articulo = new Articulo();
-        articulo.setDescripcion(jCantidad.getText());
-        /*articulo.setFecha_ingreso();*/
-        articulo.setNombre(jNombre.getText());
-        articulo.setPrecio_costo(jCantidad.getText());
-        articulo.setPrecio_venta(Double.valueOf(jCantidad.getText()));
-        articulo.setStock(jCantidad.getText());
-        articulo.setProveedor_idproveedor(1);
+        try {
+            if (!value.equals(""))
+                articulo.setIdarticulo(Integer.parseInt(value));
+            articulo.setNombre(jNombre.getText());
+            articulo.setDescripcion(jCantidad.getText());
+            articulo.setPrecio_venta(Double.valueOf(jCantidad.getText()));
+            articulo.setPrecio_costo(jCantidad.getText());
+            articulo.setStock(jCantidad.getText());
+            articulo.setFecha_ingreso(FechaUtil.getCurrentDate());
+            articulo.setProveedor_idproveedor(9);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return articulo;
     }
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jTextField1);
+        value = "";
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        articuloDao.update(getArticulo());
-        JOptionPane.showMessageDialog(null, "Artículo Actualizado");
+        getFilaValor();
+        Articulo articulo = articuloDao.selectById(Integer.parseInt(value));
+        jCantidad.setText(articulo.getStock());
+        jNombre.setText(articulo.getNombre());
+        jPrecioU.setText(articulo.getPrecio_costo());
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        articuloDao.delete(1);
-        JOptionPane.showMessageDialog(null, "Artículo Eliminado");
+        getFilaValor();
+        articuloDao.delete(Integer.parseInt(value));
+        eliminarDatoTable();
+        refrescar();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void eliminarDatoTable() {
+        tableModel.getDataVector().removeAllElements();
+        tableModel.fireTableDataChanged();
+    }
+
+    private void getFilaValor() {
+        int column = 0;
+        int row = jTable2.getSelectedRow();
+        value = jTable2.getModel().getValueAt(row, column).toString();
+    }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         Home home = new Home();
-        home.setVisible(false);
+        home.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        Articulo articulo = articuloDao.selectById(Integer.parseInt(jID.getText()));
+        tableModel.setColumnIdentifiers(new Object[]{
+                "id", "Nombre", "Descripcion", "PrecioCosto", "PrecioVenta"});
+        Object[] fila = {
+                articulo.getIdarticulo(), articulo.getNombre(),
+                articulo.getDescripcion(), articulo.getPrecio_costo(),
+                articulo.getPrecio_venta()
+        };
+        tableModel.addRow(fila);
+        jTable2.setModel(tableModel);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,7 +436,7 @@ public class Productos extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -355,12 +468,15 @@ public class Productos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JTextField jCantidad;
+    private javax.swing.JComboBox<String> jComboProveedor;
+    private javax.swing.JTextField jDescripcion;
     private javax.swing.JTextField jID;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -370,6 +486,7 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jPrecioU;

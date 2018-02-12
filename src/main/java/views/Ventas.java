@@ -5,17 +5,41 @@
  */
 package views;
 
+import com.itextpdf.text.DocumentException;
+import core.conexion.MyBatisConnection;
+import core.dao.ArticuloDao;
+import core.dao.ClienteDao;
+import core.dao.FacturaDao;
+import core.util.Atendido;
+import core.util.FechaUtil;
+import core.util.PDFCreator;
+import core.util.Storage;
+import core.vo.Articulo;
+import core.vo.Cliente;
+import core.vo.Factura;
+import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
+
 /**
  *
  * @author Ivans
  */
 public class Ventas extends javax.swing.JFrame {
 
+    private ClienteDao clienteDao = new ClienteDao(MyBatisConnection.getSqlSessionFactory());
+    private FacturaDao facturaDao = new FacturaDao(MyBatisConnection.getSqlSessionFactory());
+    private ArticuloDao articuloDao = new ArticuloDao(MyBatisConnection.getSqlSessionFactory());
+    private Cliente cliente;
+    private Factura factura;
+
     /**
      * Creates new form Home
      */
     public Ventas() {
         initComponents();
+        setLocationRelativeTo(null);
+        agregarCombo();
     }
 
     /**
@@ -37,7 +61,7 @@ public class Ventas extends javax.swing.JFrame {
         bntSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnIngresar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
+        btnLimpiarArticulos = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -56,7 +80,6 @@ public class Ventas extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jCedula = new javax.swing.JTextField();
         btnFactura = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -118,13 +141,13 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
-        btnLimpiar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.setToolTipText("");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarArticulos.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpiarArticulos.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
+        btnLimpiarArticulos.setText("Limpiar");
+        btnLimpiarArticulos.setToolTipText("");
+        btnLimpiarArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                btnLimpiarArticulosActionPerformed(evt);
             }
         });
 
@@ -214,7 +237,7 @@ public class Ventas extends javax.swing.JFrame {
                             .addGap(50, 50, 50)
                             .addComponent(btnIngresar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnLimpiar))
+                            .addComponent(btnLimpiarArticulos))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addGap(30, 30, 30)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -262,7 +285,7 @@ public class Ventas extends javax.swing.JFrame {
                     .addComponent(lblPrecioTotal))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimpiar)
+                    .addComponent(btnLimpiarArticulos)
                     .addComponent(btnIngresar))
                 .addGap(23, 23, 23))
         );
@@ -276,7 +299,7 @@ public class Ventas extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cédula");
+        jLabel5.setText("Cï¿½dula");
 
         btnFactura.setBackground(new java.awt.Color(255, 255, 255));
         btnFactura.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
@@ -285,16 +308,6 @@ public class Ventas extends javax.swing.JFrame {
         btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFacturaActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setToolTipText("");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -318,11 +331,11 @@ public class Ventas extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Teléfono");
+        jLabel18.setText("Telï¿½fono");
 
         lblTelefono.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
-        lblTelefono.setText("Teléfono");
+        lblTelefono.setText("Telï¿½fono");
 
         lblApellido.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         lblApellido.setForeground(new java.awt.Color(255, 255, 255));
@@ -336,12 +349,6 @@ public class Ventas extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFactura)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar)
-                .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,6 +370,10 @@ public class Ventas extends javax.swing.JFrame {
                             .addComponent(lblApellido)
                             .addComponent(lblTelefono))))
                 .addContainerGap(268, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFactura)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,10 +397,8 @@ public class Ventas extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(lblTelefono))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnFactura))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addComponent(btnFactura)
                 .addContainerGap())
         );
 
@@ -443,27 +452,93 @@ public class Ventas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void agregarCombo() {
+        int size = Atendido.getArticulos().size();
+        if (size > 0 && Atendido.getArticulos().get(size - 1).getNombre() != null) {
+            String nombre = Atendido.getArticulos().get(size - 1).getNombre();
+            cbListProductos.setSelectedItem(nombre);
+        }
+    }
+
+    private void btnLimpiarArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarArticulosActionPerformed
+        // Validar.limmpiarCampos();
+    }//GEN-LAST:event_btnLimpiarArticulosActionPerformed
 
     private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
-        // TODO add your handling code here:
+        try {
+            actualizarProducto();
+            ingresarFactura();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        generarFactura();
     }//GEN-LAST:event_btnFacturaActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    private void actualizarProducto() {
+        Articulo articulo = new Articulo();
+        for (Articulo ar : Atendido.getArticulos()) {
+            articulo.setStock(ar.getStock());
+            articuloDao.updateStock(articulo);
+        }
+    }
+
+    private void ingresarFactura() throws ParseException {
+        StringBuilder nombreArt = new StringBuilder();
+        Double totalFactura = 0.0;
+        for (Articulo articulo : Atendido.getArticulos()) {
+            nombreArt.append(articulo.getNombre()).append(", ");
+            totalFactura =+ articulo.getPrecio_venta();
+        }
+        factura = new Factura();
+        factura.setNombre_empleado(Storage.getUsuario().getNombre());
+        factura.setArticulos(nombreArt.toString());
+        factura.setFecha_facturacion(FechaUtil.getCurrentDate());
+        factura.setTotal_factura(totalFactura);
+        factura.setIVA(totalFactura * 0.12);
+        factura.setForma_pago("");
+        factura.setUsuario_idUsuario(Storage.getUsuario().getIdUsuario());
+        factura.setCliente_idcliente(cliente.getIdcliente());
+        facturaDao.insert(factura);
+    }
+
+    private void generarFactura() {
+        PDFCreator pdfCreator = new PDFCreator();
+        try {
+            pdfCreator.crearPDF("Factura del Cliente", "Lista de Productos", 2, new PDFCreator.PDFTabla() {
+                @Override
+                public void addCellTable() {
+                    pdfCreator.getTabla().addCell("idFactura");
+                    pdfCreator.getTabla().addCell(String.valueOf(factura.getIdfactura()));
+                    pdfCreator.getTabla().addCell("Empleado");
+                    pdfCreator.getTabla().addCell(factura.getNombre_empleado());
+                    pdfCreator.getTabla().addCell("Articulos");
+                    pdfCreator.getTabla().addCell(factura.getArticulos());
+                    pdfCreator.getTabla().addCell("Fecha FacturaciÃ³n");
+                    pdfCreator.getTabla().addCell(String.valueOf(factura.getFecha_facturacion()));
+                    pdfCreator.getTabla().addCell("IVA");
+                    pdfCreator.getTabla().addCell(String.valueOf(factura.getIVA()));
+                    pdfCreator.getTabla().addCell("Cliente");
+                    pdfCreator.getTabla().addCell(cliente.getNombres());
+                }
+            });
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void bntSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalirActionPerformed
-        // TODO add your handling code here:
+        Home home = new Home();
+        home.setVisible(false);
+        dispose();
     }//GEN-LAST:event_bntSalirActionPerformed
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
-        // TODO add your handling code here:
+        AgregarProductos agregarProductos = new AgregarProductos();
+        agregarProductos.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -471,7 +546,15 @@ public class Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        cliente = clienteDao.selectById(Integer.parseInt(jCedula.getText()));
+        if (cliente != null)
+            JOptionPane.showMessageDialog(null, "Usuario " +  cliente.getNombres());
+        else {
+            Atendido.setClienteFac(true);
+            Clientes clientes = new Clientes();
+            clientes.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -481,7 +564,7 @@ public class Ventas extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -521,10 +604,9 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarProducto;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFactura;
     private javax.swing.JButton btnIngresar;
-    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnLimpiarArticulos;
     private javax.swing.JComboBox<String> cbListProductos;
     private javax.swing.JTextField jCedula;
     private javax.swing.JLabel jLabel1;
