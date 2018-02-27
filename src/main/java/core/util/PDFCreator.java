@@ -1,76 +1,76 @@
 package core.util;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class PDFCreator {
 
-    private PdfPTable tabla;
-    private String segundoParrafo = "Este es el segundo y tiene una fuente rara";
-    private String arial = "arial";
-    private int size = 22;
-    private int estilo = Font.ITALIC;
-    private BaseColor color = BaseColor.DARK_GRAY;
+    public Font.FontFamily family = Font.FontFamily.COURIER;
+    public int size = 16;
+    public int style = Font.ITALIC;
+    public BaseColor background = BaseColor.DARK_GRAY;
+    private String nameFile, sub, title;
+    private Font fontTitle, fontSub;
+    private boolean openPDF = true;
 
-    public PDFCreator() {
+    public PDFCreator(String nameFile, String title, String sub) {
+        this.nameFile = nameFile;
+        this.title = title;
+        this.sub = sub;
     }
 
-    public void crearPDF(String name, String parrafo, int numColumns, PDFTabla pdfTabla) throws FileNotFoundException, DocumentException {
-
-        // Se crea el documento
+    public void crearPDF(int numColumns, PDFTabla pdfTabla) throws FileNotFoundException, DocumentException {
         Document documento = new Document();
-        // Se crea el OutputStream para el fichero donde queremos dejar el pdf.
-        FileOutputStream ficheroPdf = new FileOutputStream(name);
-         /*Se asocia el documento al OutputStream y se indica que el espaciado entre
-         lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento*/
-        PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
-        // Se abre el documento.
+        PdfWriter.getInstance(documento, new FileOutputStream(nameFile));
         documento.open();
-        documento.add(new Paragraph(parrafo));
-        get(documento, segundoParrafo, arial, size, estilo, color);
-        tabla = new PdfPTable(numColumns);
-        pdfTabla.addCellTable();
+        Paragraph title = new Paragraph(this.title, fontTitle);
+        title.setPaddingTop(10);
+        documento.add(title);
+        Paragraph sub = new Paragraph(this.sub, fontSub);
+        sub.setPaddingTop(10);
+        documento.add(sub);
+        /*documento.add(new Paragraph(segundoParrafo, FontFactory.getFont(arial, tamaño, estilo, color)));*/
+        PdfPTable tabla = new PdfPTable(numColumns);
+        pdfTabla.addCellTable(tabla);
         /*for (int i = 0; i < size; i++) {
             tabla.addCell("celda " + i);
         }*/
         documento.add(tabla);
         documento.close();
         System.out.println("Hola");
+        openPDF();
     }
 
-    public void get(Document documento, String segundoParrafo, String fuente, int size, int estilo, BaseColor color) throws DocumentException {
-        documento.add(new Paragraph(segundoParrafo, FontFactory.getFont(fuente, size, estilo, color)));
+    private void openPDF() {
+        if (Desktop.isDesktopSupported() && openPDF) try {
+            File myFile = new File(this.nameFile);
+            Desktop.getDesktop().open(myFile);
+        } catch (IOException ex) {
+            System.out.println("No se pudo crear");
+        }
+    }
+
+    public void setFontTitle(Font.FontFamily family, int size, int style, BaseColor background) {
+        fontTitle = new Font(family, size, style, background);
+    }
+
+    public void setFontSub(Font.FontFamily family, int size, int style, BaseColor background) {
+        fontSub = new Font(family, size, style, background);
+    }
+
+    public void setOpenPDF(boolean openPDF) {
+        this.openPDF = openPDF;
     }
 
     public interface PDFTabla {
-        void addCellTable();
-    }
-
-    public PdfPTable getTabla() {
-        return tabla;
-    }
-
-    public void setSegundoParrafo(String segundoParrafo) {
-        this.segundoParrafo = segundoParrafo;
-    }
-
-    public void setArial(String arial) {
-        this.arial = arial;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setEstilo(int estilo) {
-        this.estilo = estilo;
-    }
-
-    public void setColor(BaseColor color) {
-        this.color = color;
+        void addCellTable(PdfPTable tabla);
     }
 }

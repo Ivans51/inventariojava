@@ -10,7 +10,7 @@
         <result property="idcliente" column="idcliente"/>
         <result property="cedula" column="cedula"/>
         <result property="nombres" column="nombres"/>
-        <result property="apellidos" column="apellidos"/>
+        <result property="telefonos" column="apellidos"/>
         <result property="direccion" column="direccion"/>
         <result property="nombre_ciudad" column="nombre_ciudad"/>
     </resultMap>
@@ -23,24 +23,24 @@
     <select id="selectById" parameterType="int" resultMap="result">
         SELECT *
         FROM store.cliente
-        WHERE idcliente = #{idcliente}
+        WHERE cedula = #{cedula}
     </select>
 
     <insert id="insert" parameterType="Cliente" useGeneratedKeys="true" keyProperty="idcliente">
-        INSERT INTO store.cliente (cedula, nombres, apellidos, direccion, nombre_ciudad)
+        INSERT INTO store.cliente (cedula, nombres, telefonos, direccion, nombre_ciudad)
         VALUES (#{cedula}, #{nombres}, #{apellidos}, #{direccion}, #{nombre_ciudad});
     </insert>
 
     <update id="update" parameterType="Cliente">
         UPDATE store.cliente
         SET cedula = #{cedula}, nombres = #{nombres},
-            apellidos = #{apellidos}, direccion = #{direccion},
+            telefonos = #{apellidos}, direccion = #{direccion},
             nombre_ciudad = #{nombre_ciudad}
-        WHERE idcliente = #{idcliente}
+        WHERE cedula = #{cedula}
     </update>
 
     <delete id="delete" parameterType="int">
         DELETE FROM store.cliente
-        WHERE idcliente = #{idcliente}
+        WHERE cedula = #{cedula}
     </delete>
 </mapper>

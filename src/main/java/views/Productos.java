@@ -8,6 +8,7 @@ package views;
 import core.conexion.MyBatisConnection;
 import core.dao.ArticuloDao;
 import core.dao.ProveedorDao;
+import core.util.Atendido;
 import core.util.FechaUtil;
 import core.util.Validar;
 import core.vo.Articulo;
@@ -46,20 +47,20 @@ public class Productos extends javax.swing.JFrame {
         List<Proveedor> proveedors = proveedorDao.selectAll();
         List<String> nombres = new ArrayList<>();
         for (Proveedor proveedor : proveedors)
-            nombres.add(proveedor.getNombre());
-        // jComboBox.setModel(new DefaultComboBoxModel(nombres.toArray()));
+            nombres.add(String.valueOf(proveedor.getIdproveedor()));
+        jComboProveedor.setModel(new DefaultComboBoxModel(nombres.toArray()));
     }
 
     private void refrescar() {
         List<Articulo> articulos = articuloDao.selectAll();
         if (articulos.size() > 0) {
             tableModel.setColumnIdentifiers(new Object[]{
-                    "id", "Nombre", "Descripcion", "PrecioCosto", "PrecioVenta"});
+                    "id", "Nombre", "Descripcion", "PrecioVenta", "Stock"});
             for (Articulo articulo : articulos) {
                 Object[] fila = {
                         articulo.getIdarticulo(), articulo.getNombre(),
-                        articulo.getDescripcion(), articulo.getPrecio_costo(),
-                        articulo.getPrecio_venta()
+                        articulo.getDescripcion(), articulo.getPrecio_venta(),
+                        articulo.getStock()
                 };
                 tableModel.addRow(fila);
             }
@@ -86,7 +87,6 @@ public class Productos extends javax.swing.JFrame {
         btnIngresar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -164,16 +164,6 @@ public class Productos extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setToolTipText("");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
@@ -246,9 +236,7 @@ public class Productos extends javax.swing.JFrame {
                         .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)
-                        .addGap(10, 10, 10))
+                        .addGap(35, 35, 35))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,7 +313,6 @@ public class Productos extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
                     .addComponent(btnEditar)
                     .addComponent(btnIngresar)
                     .addComponent(btnLimpiar))
@@ -347,18 +334,22 @@ public class Productos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        switch (value) {
-            case "":
-                articuloDao.insert(getArticulo());
-                break;
-            default:
-                articuloDao.update(getArticulo());
-                break;
+        boolean numero = Validar.entradaTexto(Validar.soloNumero, jPrecioU.getText(), jCantidad.getText());
+        boolean texto = Validar.entradaTexto(Validar.soloTexto, jNombre.getText());
+        if (numero && texto) {
+            switch (value) {
+                case "":
+                    articuloDao.insert(getArticulo());
+                    break;
+                default:
+                    articuloDao.update(getArticulo());
+                    break;
+            }
+            Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jDescripcion);
+            value = "";
+            eliminarDatoTable();
+            refrescar();
         }
-        Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jTextField1);
-        value = "";
-        eliminarDatoTable();
-        refrescar();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private Articulo getArticulo() {
@@ -367,9 +358,9 @@ public class Productos extends javax.swing.JFrame {
             if (!value.equals(""))
                 articulo.setIdarticulo(Integer.parseInt(value));
             articulo.setNombre(jNombre.getText());
-            articulo.setDescripcion(jCantidad.getText());
-            articulo.setPrecio_venta(Double.valueOf(jCantidad.getText()));
-            articulo.setPrecio_costo(jCantidad.getText());
+            articulo.setDescripcion(jDescripcion.getText());
+            articulo.setPrecio_venta(Double.valueOf(jPrecioU.getText()));
+            articulo.setPrecio_costo(jPrecioU.getText());
             articulo.setStock(jCantidad.getText());
             articulo.setFecha_ingreso(FechaUtil.getCurrentDate());
             articulo.setProveedor_idproveedor(9);
@@ -380,7 +371,7 @@ public class Productos extends javax.swing.JFrame {
     }
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jTextField1);
+        Validar.limmpiarCampos(jNombre, jPrecioU, jCantidad, jDescripcion);
         value = "";
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -389,15 +380,9 @@ public class Productos extends javax.swing.JFrame {
         Articulo articulo = articuloDao.selectById(Integer.parseInt(value));
         jCantidad.setText(articulo.getStock());
         jNombre.setText(articulo.getNombre());
+        jDescripcion.setText(articulo.getDescripcion());
         jPrecioU.setText(articulo.getPrecio_costo());
     }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        getFilaValor();
-        articuloDao.delete(Integer.parseInt(value));
-        eliminarDatoTable();
-        refrescar();
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void eliminarDatoTable() {
         tableModel.getDataVector().removeAllElements();
@@ -411,22 +396,26 @@ public class Productos extends javax.swing.JFrame {
     }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        Home home = new Home();
-        home.setVisible(true);
+        new Home().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Articulo articulo = articuloDao.selectById(Integer.parseInt(jID.getText()));
-        tableModel.setColumnIdentifiers(new Object[]{
-                "id", "Nombre", "Descripcion", "PrecioCosto", "PrecioVenta"});
-        Object[] fila = {
-                articulo.getIdarticulo(), articulo.getNombre(),
-                articulo.getDescripcion(), articulo.getPrecio_costo(),
-                articulo.getPrecio_venta()
-        };
-        tableModel.addRow(fila);
-        jTable2.setModel(tableModel);
+        eliminarDatoTable();
+        if (jID.getText().equalsIgnoreCase("")) {
+            refrescar();
+        } else {
+            Articulo articulo = articuloDao.selectById(Integer.parseInt(jID.getText()));
+            tableModel.setColumnIdentifiers(new Object[]{
+                    "id", "Nombre", "Descripcion", "PrecioVenta", "Stock"});
+            Object[] fila = {
+                    articulo.getIdarticulo(), articulo.getNombre(),
+                    articulo.getDescripcion(), articulo.getPrecio_venta(),
+                    articulo.getStock()
+            };
+            tableModel.addRow(fila);
+            jTable2.setModel(tableModel);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -470,7 +459,6 @@ public class Productos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;

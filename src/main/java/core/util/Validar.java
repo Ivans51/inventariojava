@@ -7,11 +7,14 @@ import javafx.scene.input.KeyEvent;
 import javax.swing.*;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  * Created by WAMS-10 on 26/07/2017.
  */
 public class Validar {
+    
+    public static String soloNumero = "[0-9]+", soloTexto = "[A-Za-z ]+$", soloRes = "[SN|sn]";
 
     public static boolean campoVacio(JTextField... txt) throws Myexception {
         boolean esValido = true;
@@ -43,6 +46,16 @@ public class Validar {
                 if (part2 != null) throw new Myexception("Campo tiene mas de una palabra");
             }
         }
+    }
+    
+    public static boolean entradaTexto(String tipoDato, String... valor) {
+        for (int i = 0; i < valor.length; i++) {
+            if (!valor[i].matches(tipoDato)){
+                JOptionPane.showMessageDialog(null , "Error " + valor[i] + " tipo no permitido");
+                return false;
+            }
+        }
+        return true;
     }
 
     public static String recuperarSegundaPalabra(String regex, String frase) throws Myexception {

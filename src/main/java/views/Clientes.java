@@ -10,7 +10,6 @@ import core.dao.ClienteDao;
 import core.util.Atendido;
 import core.util.Validar;
 import core.vo.Cliente;
-import core.vo.Proveedor;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -37,11 +36,10 @@ public class Clientes extends javax.swing.JFrame {
         List<Cliente> clientes = clienteDao.selectAll();
         if (clientes.size() > 0) {
             tableModel.setColumnIdentifiers(new Object[]{
-                    "id", "Cedula", "Nombres", "Apellidos", "Direccion", "NombreCiudad"});
+                    "Cedula", "Nombres", "Direccion", "NombreCiudad"});
             for (Cliente cliente : clientes) {
                 Object[] fila = {
-                        cliente.getIdcliente(), cliente.getCedula(),
-                        cliente.getNombres(), cliente.getApellidos(),
+                        cliente.getCedula(), cliente.getNombres(),
                         cliente.getDireccion(), cliente.getNombre_ciudad()
                 };
                 tableModel.addRow(fila);
@@ -107,7 +105,6 @@ public class Clientes extends javax.swing.JFrame {
         btnIngresar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jCedula = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -119,9 +116,9 @@ public class Clientes extends javax.swing.JFrame {
         jCiudad = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableCliente = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
-        jTelefono = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jTelefono = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel1.setText("Usuario");
@@ -183,16 +180,6 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setToolTipText("");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
@@ -205,11 +192,11 @@ public class Clientes extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Cï¿½dula");
+        jLabel4.setText("Cédula");
 
         jLabel5.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cï¿½dula");
+        jLabel5.setText("Cédula");
 
         jLabel6.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,10 +219,6 @@ public class Clientes extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableCliente);
 
-        jLabel8.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Telï¿½fono");
-
         btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
         btnBuscar.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -245,6 +228,10 @@ public class Clientes extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
+
+        jLabel8.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Telefono");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -256,12 +243,7 @@ public class Clientes extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnIngresar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar)
-                        .addGap(10, 10, 10))
+                        .addComponent(btnLimpiar))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,7 +272,8 @@ public class Clientes extends javax.swing.JFrame {
                                             .addComponent(jCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnEditar))
                                 .addGap(0, 23, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -333,7 +316,6 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
                     .addComponent(btnEditar)
                     .addComponent(btnIngresar)
                     .addComponent(btnLimpiar))
@@ -355,19 +337,31 @@ public class Clientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        switch (value) {
-            case "":
-                clienteDao.insert(getCliente());
-                break;
-            default:
-                clienteDao.update(getCliente());
-                break;
+        boolean numero = Validar.entradaTexto(Validar.soloNumero, jCedula.getText(), jTelefono.getText());
+        boolean texto = Validar.entradaTexto(Validar.soloTexto, jNombre.getText(), jCiudad.getText());
+        if (numero && texto) {
+            switch (value) {
+                case "":
+                    clienteDao.insert(getCliente());
+                    break;
+                default:
+                    clienteDao.update(getCliente());
+                    break;
+            }
+            stateTable();
         }
-        Validar.limmpiarCampos(jTelefono, jCedula, jCiudad, jNombre, jTextField1);
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void stateTable() {
+        Validar.limmpiarCampos(jCedula, jCiudad, jNombre, jTelefono);
         value = "";
         eliminarDatoTable();
         refrescar();
-    }//GEN-LAST:event_btnIngresarActionPerformed
+        if (Atendido.isClienteFac()){
+            Atendido.setCliente(getCliente());
+            abrirCliente();
+        }
+    }
 
     private Cliente getCliente() {
         Cliente cliente = new Cliente();
@@ -375,14 +369,14 @@ public class Clientes extends javax.swing.JFrame {
             cliente.setIdcliente(Integer.parseInt(value));
         cliente.setCedula(jCedula.getText());
         cliente.setNombres(jNombre.getText());
-        cliente.setApellidos(jTextField1.getText());
         cliente.setDireccion(jCiudad.getText());
         cliente.setNombre_ciudad(jCiudad.getText());
+        cliente.setApellidos(jTelefono.getText());
         return cliente;
     }
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        Validar.limmpiarCampos(jCedula, jCiudad, jNombre);
+        Validar.limmpiarCampos(jCedula, jCiudad, jNombre, jTelefono);
         value = "";
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -392,20 +386,13 @@ public class Clientes extends javax.swing.JFrame {
         jCedula.setText(cliente.getCedula());
         jNombre.setText(cliente.getNombres());
         jCiudad.setText(cliente.getNombre_ciudad());
-        jCiudad.setText(cliente.getDireccion());
+        jTelefono.setText(cliente.getApellidos());
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void eliminarDatoTable() {
         tableModel.getDataVector().removeAllElements();
         tableModel.fireTableDataChanged();
     }
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        getFilaValor();
-        clienteDao.delete(Integer.parseInt(value));
-        eliminarDatoTable();
-        refrescar();
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void getFilaValor() {
         int column = 0;
@@ -414,34 +401,38 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        if (Atendido.isClienteFac()) {
-            Atendido.setClienteFac(false);
-            Ventas ventas = new Ventas();
-            ventas.setVisible(true);
-        } else {
-            Home home = new Home();
-            home.setVisible(true);
-        }
+        if (Atendido.isClienteFac())
+            abrirCliente();
+        else
+            new Home().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void abrirCliente() {
+        Atendido.setClienteFac(false);
+        new Ventas().setVisible(true);
+    }
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        Cliente cliente = clienteDao.selectById(Integer.parseInt(jSearchCedula.getText()));
-        tableModel.setColumnIdentifiers(new Object[]{
-                    "id", "Cedula", "Nombres", "Apellidos", "Direccion", "NombreCiudad"});
+        eliminarDatoTable();
+        if (jSearchCedula.getText().equalsIgnoreCase("")) {
+            refrescar();
+        } else {
+            Cliente cliente = clienteDao.selectById(Integer.parseInt(jSearchCedula.getText()));
+            tableModel.setColumnIdentifiers(new Object[]{
+                    "Cedula", "Nombres", "Direccion", "NombreCiudad"});
             Object[] fila = {
-                    cliente.getIdcliente(), cliente.getCedula(),
-                    cliente.getNombres(), cliente.getApellidos(),
+                    cliente.getCedula(), cliente.getNombres(),
                     cliente.getDireccion(), cliente.getNombre_ciudad()
             };
             tableModel.addRow(fila);
-        jTableCliente.setModel(tableModel);
+            jTableCliente.setModel(tableModel);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;

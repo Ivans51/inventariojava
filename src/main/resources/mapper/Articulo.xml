@@ -28,6 +28,12 @@
         WHERE idarticulo = #{idarticulo}
     </select>
 
+    <select id="selectByNombre" parameterType="int" resultMap="result">
+        SELECT *
+        FROM store.articulo
+        WHERE nombre = #{nombre}
+    </select>
+
     <insert id="insert" parameterType="Articulo" useGeneratedKeys="true" keyProperty="idarticulo">
         INSERT INTO store.articulo (nombre, descripcion, precio_venta, precio_costo, stock, fecha_ingreso, proveedor_idproveedor)
         VALUES (#{nombre}, #{descripcion}, #{precio_venta}, #{precio_costo}, #{stock}, #{fecha_ingreso}, #{proveedor_idproveedor});
@@ -45,7 +51,7 @@
     <update id="updateStock" parameterType="Articulo">
         UPDATE store.articulo
         SET stock = #{stock}
-        WHERE nombre = #{nombre}
+        WHERE idarticulo = #{idarticulo}
     </update>
 
     <delete id="delete" parameterType="int">

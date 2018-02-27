@@ -70,7 +70,7 @@ public class ClienteDao {
      *
      * @param usuario the instance to be persisted.
      */
-    public void update(Cliente usuario) {
+    public int update(Cliente usuario) {
         int id = -1;
         SqlSession session = sqlSessionFactory.openSession();
 
@@ -81,7 +81,7 @@ public class ClienteDao {
             session.commit();
             session.close();
         }
-        System.out.println("update(" + usuario + ") --> updated");
+        return id;
     }
 
     /**

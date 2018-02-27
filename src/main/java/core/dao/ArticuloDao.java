@@ -45,6 +45,17 @@ public class ArticuloDao {
         System.out.println("selectById(" + id + ") --> " + person);
         return person;
     }
+    
+    public Articulo selectByNombre(String nombre) {
+        Articulo person = null;
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            person = session.selectOne("Articulo.selectByNombre", nombre);
+        } finally {
+            session.close();
+        }
+        return person;
+    }
 
     /**
      * Insert an instance of Articulo into the database.
